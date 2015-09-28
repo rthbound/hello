@@ -5,7 +5,8 @@ module Hello
     sudo_mode
 
     before_action do
-      @user_entity = UpdateMyUserEntity.new(@user = current_user)
+      @password = current_user.passwords.first || raise(ActiveRecord::NotFound)
+      @entity = UpdateMyUserEntity.new(@password)
     end
 
 
@@ -14,17 +15,17 @@ module Hello
     def edit
       respond_to do |format|
         format.html {  }
-        format.json { render json: @user.to_json_web_api, status: :ok }
+        format.json { head :no_content }
       end
     end
 
     # PATCH /hello/password
     def update
-      @user.password = user_params[:password]
-      # @user.password_confirmation = user_params[:password_confirmation] if user_params[:password_confirmation]
+      @password.password = password_params[:password]
+      # @password.password_confirmation = password_params[:password_confirmation] if password_params[:password_confirmation]
 
-      if @user.save
-        flash[:notice] = @user_entity.success_message
+      if @password.save
+        flash[:notice] = @entity.success_message
         respond_to do |format|
           format.html { redirect_to hello.password_path }
           format.json { head :no_content }
@@ -32,7 +33,7 @@ module Hello
       else
         respond_to do |format|
           format.html { render :edit }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
+          format.json { render json: @password.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -41,8 +42,8 @@ module Hello
 
     private
 
-    def user_params
-      params.require(:user)
+    def password_params
+      params.require(:password)
     end
 
   end

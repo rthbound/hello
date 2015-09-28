@@ -27,3 +27,11 @@ require "hello/rails/model/email_credential_model"
 class EmailCredential < Credential
   include Hello::EmailCredentialModel
 end
+
+
+require "hello/rails/model/password_model"
+
+class Password < ActiveRecord::Base
+  include Hello::PasswordModel
+end
+

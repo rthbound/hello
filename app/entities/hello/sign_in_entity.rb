@@ -16,7 +16,8 @@ module Hello
     end
 
     def bad_password?
-      found_user? && !user.password_is?(password)
+      # found_user? && !user.password_is?(password)
+      found_user? && !user.passwords.any? { |p| p.password_is?(password) }
     end
 
     def user

@@ -5,7 +5,7 @@ module Hello
     class Mod
     end
 
-    attr_reader :credential
+    attr_reader :credential, :password_model
 
     def initialize
       @config = get_config
@@ -50,7 +50,7 @@ module Hello
         end
 
             def all_fields
-              @config[:user_fields] + %w(email)
+              @config[:user_fields] + %w(email password)
             end
 
         def write_defaults
@@ -68,7 +68,7 @@ module Hello
             # NOTE: 
             # All validations are delegated to the models
             def create_credential
-              @credential = build_models
+              @credential, @password_model = build_models
               if invalidate_models
                 merge_model_errors
                 return false
@@ -77,20 +77,23 @@ module Hello
             end
 
                 def build_models
-                  EmailCredential.new(email: email) do |c|
-                    c.build_user(user_attributes)
+                  c = EmailCredential.new(email: email) do |c|
+                    u=c.build_user(user_attributes)
                   end
+                  p=Password.new(user: c.user, password: password)
+                  return c, p
                 end
 
                 def invalidate_models
                   # credential.invalid? || user.invalid?
                   a=credential.invalid?
                   b=user.invalid?
-                  a || b
+                  c=password_model.invalid?
+                  a || b || c
                 end
 
                 def merge_model_errors
-                  hash = credential.errors.to_hash.merge(user.errors)
+                  hash = credential.errors.to_hash.merge(user.errors).merge(password_model.errors)
                   hash.each { |k,v| v.each { |v1| errors.add(k, v1) } }
                 end
 

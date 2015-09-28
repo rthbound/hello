@@ -30,7 +30,8 @@ module Hello
 
 
       def reset_token_and_deliver_email!
-        token  = @user.reset_password_token
+        puts "TODO: review what to do when forgot but have multiple passwords".on_red
+        token  = @user.passwords.first.reset_password_token
         url    = hello.reset_token_url(token)
         @user.credentials.each do |credential|
           Hello::RegistrationMailer.forgot_password(credential, url).deliver

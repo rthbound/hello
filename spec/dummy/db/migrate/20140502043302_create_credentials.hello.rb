@@ -12,5 +12,17 @@ class CreateCredentials < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    # WIP: move this to it's own migration if this PR is chosen
+    create_table :passwords do |t|
+      t.references :user, index: true
+
+      t.string   :digest
+      t.string   :reset_token_digest
+      t.datetime :reset_token_digested_at
+
+      t.timestamps
+    end
+
   end
 end

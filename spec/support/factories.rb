@@ -13,26 +13,34 @@ FactoryGirl.define do
     role 'user'
 
     username { Faker::Internet.user_name(name, %w(-_)) }
-    password '1234'
+
+    # TODO: improve this
+    after(:build) { |user| build(:password, user: user) }
+    after(:create) { |user| create(:password, user: user) }
 
     factory :webmaster_user do
       name 'Admin'
       role 'webmaster'
       username 'webmaster'
-      password 'webmaster'
     end
 
     factory :novice do
       name 'Novice'
       role 'novice'
       username 'novice'
-      password 'novice'
     end
   end
 
   factory :email_credential do
     user
     email    { Faker::Internet.email }
+  end
+
+  factory :password do
+    # transient { password "1234" }
+    user
+    # password "1234"
+    after(:build) { |password| password.password = "1234" }
   end
 
   factory :access_token do

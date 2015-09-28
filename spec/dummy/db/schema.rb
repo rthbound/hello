@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20140920192959) do
 
   add_index "credentials", ["user_id"], name: "index_credentials_on_user_id"
 
+  create_table "passwords", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "digest"
+    t.string   "reset_token_digest"
+    t.datetime "reset_token_digested_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "passwords", ["user_id"], name: "index_passwords_on_user_id"
+
   create_table "some_credential_data", force: :cascade do |t|
     t.integer  "credential_id"
     t.string   "text"
@@ -66,11 +77,8 @@ ActiveRecord::Schema.define(version: 20140920192959) do
     t.string   "locale"
     t.string   "time_zone"
     t.string   "username"
-    t.string   "password_digest"
-    t.string   "password_token_digest"
-    t.datetime "password_token_digested_at", default: '2000-01-01 00:00:00'
-    t.integer  "credentials_count",          default: 0
-    t.integer  "access_tokens_count",        default: 0
+    t.integer  "credentials_count",   default: 0
+    t.integer  "access_tokens_count", default: 0
     t.string   "city"
   end
 
