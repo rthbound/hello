@@ -8,7 +8,7 @@ module Hello
     included do
       has_many :credentials,       dependent: :destroy
       has_many :email_credentials, dependent: :destroy
-      has_many :passwords,         dependent: :destroy
+      has_many :password_credentials, dependent: :destroy # WIP TODO: if this PR is chosen, review all places that use user.credentials_count}
       has_many :access_tokens,     dependent: :destroy
 
       validates_presence_of :name, :locale, :time_zone
@@ -51,7 +51,7 @@ module Hello
 
       def hello_apply_config!
         Hello.configuration.tap do |c|
-          Password.hello_apply_config!
+          PasswordCredential.hello_apply_config!
           validates_format_of :username, with: c.username_regex
           validates_length_of :username,
                                    in: c.username_length,

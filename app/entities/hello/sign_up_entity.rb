@@ -80,7 +80,8 @@ module Hello
                   c = EmailCredential.new(email: email) do |c|
                     u=c.build_user(user_attributes)
                   end
-                  p=Password.new(user: c.user, password: password)
+                  # WIP TODO: name this better since we have multiple credentials now
+                  p=PasswordCredential.new(user: c.user, password: password)
                   return c, p
                 end
 

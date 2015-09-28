@@ -26,7 +26,7 @@ module Hello
       example "one is automatically created with factories" do
         expect {
           create(:user)
-        }.to change { Password.count }.from(0).to(1)
+        }.to change { PasswordCredential.count }.from(0).to(1)
       end
     end
 

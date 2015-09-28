@@ -8,7 +8,7 @@ module Hello
       sign_out!
       @reset_password = ResetPasswordEntity.new(params[:token])
 
-      if @reset_password.password
+      if @reset_password.password_credential
         session[:hello_reset_token] = params[:token]
         redirect_to password_reset_path
       else

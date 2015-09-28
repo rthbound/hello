@@ -29,9 +29,9 @@ class EmailCredential < Credential
 end
 
 
-require "hello/rails/model/password_model"
+require "hello/rails/model/password_credential_model"
 
-class Password < ActiveRecord::Base
-  include Hello::PasswordModel
+class PasswordCredential < Credential
+  include Hello::PasswordCredentialModel
 end
 

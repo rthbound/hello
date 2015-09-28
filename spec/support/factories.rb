@@ -15,8 +15,8 @@ FactoryGirl.define do
     username { Faker::Internet.user_name(name, %w(-_)) }
 
     # TODO: improve this
-    after(:build) { |user| build(:password, user: user) }
-    after(:create) { |user| create(:password, user: user) }
+    after(:build)  { |user| build(:password_credential,  user: user) }
+    after(:create) { |user| create(:password_credential, user: user) }
 
     factory :webmaster_user do
       name 'Admin'
@@ -36,10 +36,8 @@ FactoryGirl.define do
     email    { Faker::Internet.email }
   end
 
-  factory :password do
-    # transient { password "1234" }
+  factory :password_credential do
     user
-    # password "1234"
     after(:build) { |password| password.password = "1234" }
   end
 

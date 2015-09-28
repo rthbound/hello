@@ -25,7 +25,7 @@ end
 
 def given_I_have_an_email_credential_and_forgot_my_password
   credential = given_I_have_an_email_credential
-  return unencrypted_token = credential.user.passwords.first.reset_password_token
+  return unencrypted_token = credential.user.password_credentials.first.reset_password_token
 end
 
 def given_I_am_logged_in_with_a_classic_credential

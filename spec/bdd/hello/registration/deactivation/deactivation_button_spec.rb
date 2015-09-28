@@ -73,7 +73,7 @@ RSpec.describe "Hello Gem", type: :feature do
         
         Then "and my data should remain in the database" do
           expect(User.count).to        eq(1)
-          expect(Credential.count).to  eq(1)
+          expect(Credential.count).to  eq(2)
           expect(AccessToken.count).to eq(1)
         end
       end

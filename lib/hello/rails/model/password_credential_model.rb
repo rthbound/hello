@@ -1,16 +1,15 @@
 module Hello
-  module PasswordModel
+  module PasswordCredentialModel
       extend ActiveSupport::Concern
 
 
       included do
-        belongs_to :user, counter_cache: false
-        validates_presence_of :user
-
         attr_reader :password
         validates_presence_of :password, on: :create
         # WIP: do you think we should validate such fields as well?
         # validates_presence_of :digest
+
+        before_destroy :cannot_destroy_last_password_credential
       end
 
       module ClassMethods
@@ -60,7 +59,19 @@ module Hello
         update(reset_token_digest: nil, reset_token_digested_at: nil)
       end
 
+    private
 
+    # TODO: this is actually never tested anywhere :)
+    def cannot_destroy_last_password_credential
+      return if hello_is_user_being_destroyed?
+      return if not is_last_password_credential?
+      errors[:base] << "must have at least one credential"
+      false
+    end
+
+    def is_last_password_credential?
+      user.password_credentials.count == 1
+    end
 
 
 

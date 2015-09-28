@@ -43,14 +43,6 @@ ActiveRecord::Schema.define(version: 20140920192959) do
     t.string   "email_token_digest"
     t.datetime "email_token_digested_at"
     t.datetime "email_confirmed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "credentials", ["user_id"], name: "index_credentials_on_user_id"
-
-  create_table "passwords", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "digest"
     t.string   "reset_token_digest"
     t.datetime "reset_token_digested_at"
@@ -58,7 +50,7 @@ ActiveRecord::Schema.define(version: 20140920192959) do
     t.datetime "updated_at"
   end
 
-  add_index "passwords", ["user_id"], name: "index_passwords_on_user_id"
+  add_index "credentials", ["user_id"], name: "index_credentials_on_user_id"
 
   create_table "some_credential_data", force: :cascade do |t|
     t.integer  "credential_id"

@@ -31,7 +31,7 @@ RSpec.describe "Hello Gem", type: :feature do
 
         Then "my access token should be removed from the database" do
           expect(User.count).to        eq(1)
-          expect(Credential.count).to  eq(1)
+          expect(Credential.count).to  eq(2)
           expect(AccessToken.count).to eq(0)
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe "Hello Gem", type: :feature do
 
         Then "my access token should be removed from the database" do
           expect(User.count).to        eq(2)
-          expect(Credential.count).to  eq(2)
+          expect(Credential.count).to  eq(4)
           expect(AccessToken.count).to eq(1)
         end
       end

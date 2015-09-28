@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Hello
-  describe Password do
+  describe PasswordCredential do
 
     describe "validations" do
       it "presence of name" do

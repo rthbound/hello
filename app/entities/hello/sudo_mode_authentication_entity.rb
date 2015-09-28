@@ -8,7 +8,7 @@ module Hello
 
     def authenticate!(password, sudo_expires_at)
       # if access_token.user.password_is?(password)
-      if access_token.user.passwords.any? { |p| p.password_is?(password) }
+      if access_token.user.password_credentials.any? { |p| p.password_is?(password) }
         access_token.update! sudo_expires_at: sudo_expires_at
       end
     end
